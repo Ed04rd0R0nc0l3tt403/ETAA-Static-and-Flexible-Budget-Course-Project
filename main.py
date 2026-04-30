@@ -1,26 +1,30 @@
-from src.sales_bdg      import compute_sales_bdg
-from src.production_bdg import compute_production_bdg
-from src.costs_bdg      import compute_production_cost_bdg
+from src.sales_bdg      import compute_sales_bdg, export_sales_bdg_excel
+from src.production_bdg import compute_production_bdg, export_production_bdg_excel
+from src.costs_bdg      import compute_production_cost_bdg, export_production_cost_bdg_excel
 from src.cash_flow_bdg  import compute_cash_flow_bdg
 from src.income_bdg     import compute_income_bdg
 
 from src.charts import (
-    chart_revenue_by_segment,
-    chart_margins,
+    chart_sales_units_stacked,
+    chart_sales_revenue_monthly,
+    chart_volume_price_contribution,
+    chart_segment_growth_rate,
+    chart_inventory_position,
     chart_units_sold_vs_produced,
-    chart_inventory,
-    chart_cost_breakdown,
-    chart_waterfall,
-    chart_cash_position,
-    chart_collections_by_segment,
+    chart_production_heatmap,
+    chart_cost_breakdown_quarterly,
+    chart_cost_per_unit_trend,
+    chart_revenue_cost_ebit,
 )
 
 def main():
     # --- Sales ---
-    sales_quarterly, total_revenue = compute_sales_bdg()
-    print("=== Sales Budget ===")
+    sales_quarterly, sales_yearly, total_revenue = compute_sales_bdg()
+    print("=== Sales Budget — Quarterly ===")
     print(sales_quarterly.to_string(index=False))
-    print(f"\nTotal Revenue: €{total_revenue:.2f}M")
+    print("\n=== Sales Budget — Yearly Revenue ===")
+    print(sales_yearly.to_string(index=False))
+    print(f"\nTotal Revenue (all years): €{total_revenue:.2f}M")
 
     # --- Production ---
     _, prod_quarterly = compute_production_bdg()
@@ -67,15 +71,26 @@ def main():
     print("\n=== Budgeted Income Statement — Yearly ===")
     print(income_y.to_string(index=False))
 
-    # --- Charts ---
-    chart_revenue_by_segment()
-    chart_margins(income_q)
-    chart_units_sold_vs_produced(prod_quarterly)
-    chart_inventory(prod_quarterly)
-    chart_cost_breakdown(cost_quarterly)
-    chart_waterfall(income_y)
-    chart_cash_position(net_cash)
-    chart_collections_by_segment(collections)
+    # --- Charts: Sales ---
+    chart_sales_units_stacked()
+    chart_sales_revenue_monthly()
+    chart_volume_price_contribution()
+    chart_segment_growth_rate()
+
+    # --- Charts: Production ---
+    chart_inventory_position()
+    chart_units_sold_vs_produced()
+    chart_production_heatmap()
+
+    # --- Charts: Production Cost ---
+    chart_cost_breakdown_quarterly()
+    chart_cost_per_unit_trend()
+    chart_revenue_cost_ebit()
+
+    # --- Excel Export ---
+    export_sales_bdg_excel()
+    export_production_bdg_excel()
+    export_production_cost_bdg_excel()
 
 if __name__ == "__main__":
     main()
