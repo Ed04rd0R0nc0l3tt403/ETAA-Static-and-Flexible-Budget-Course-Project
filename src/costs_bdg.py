@@ -22,7 +22,7 @@ def compute_production_cost_bdg(
         mat_cost      = units * cost_df.loc[seg, "mat_cost_unit"]
         labour_cost   = units * cost_df.loc[seg, "labor_cost_unit"]
         var_overhead  = units * cost_df.loc[seg, "var_overhead_unit"]
-        fix_overhead  = cost_df.loc[seg, "fixed_overhead_monthly"] * months   # €, not scaled
+        fix_overhead  = cost_df.loc[seg, "fixed_overhead_monthly"] * months / 1_000_000  # €, not scaled
 
         total_overhead     = var_overhead + fix_overhead
         total_cost         = mat_cost + labour_cost + total_overhead

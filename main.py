@@ -1,20 +1,22 @@
 from src.sales_bdg      import compute_sales_bdg, export_sales_bdg_excel
 from src.production_bdg import compute_production_bdg, export_production_bdg_excel
 from src.costs_bdg      import compute_production_cost_bdg, export_production_cost_bdg_excel
-from src.cash_flow_bdg  import compute_cash_flow_bdg
-from src.income_bdg     import compute_income_bdg
+from src.cash_flow_bdg  import compute_cash_flow_bdg, export_cash_flow_bdg_excel
+from src.income_bdg     import compute_income_bdg, export_income_bdg_excel
 
 from src.charts import (
-    chart_sales_units_stacked,
-    chart_sales_revenue_monthly,
     chart_volume_price_contribution,
     chart_segment_growth_rate,
     chart_inventory_position,
-    chart_units_sold_vs_produced,
     chart_production_heatmap,
     chart_cost_breakdown_quarterly,
+    chart_contribution_margin,
     chart_cost_per_unit_trend,
+    chart_cost_per_unit_decomposed,
     chart_revenue_cost_ebit,
+    chart_net_cash_waterfall,
+    chart_collections_timing_gap,
+    chart_gross_profit_ebit_waterfall,
 )
 
 def main():
@@ -65,32 +67,31 @@ def main():
     print("\n=== Budgeted Income Statement — Quarterly ===")
     cols = ["year", "quarter", "segment",
             "revenue", "total_cost", "gross_profit", "gross_profit_margin",
-            "marketing", "rd", "admin", "total_opex",
-            "ebit", "ebit_margin"]
+            "marketing", "rd", "admin", "total_opex", "ebit", "ebit_margin"]
     print(income_q[cols].to_string(index=False))
     print("\n=== Budgeted Income Statement — Yearly ===")
     print(income_y.to_string(index=False))
 
-    # --- Charts: Sales ---
-    chart_sales_units_stacked()
-    chart_sales_revenue_monthly()
+    # --- Charts ---
     chart_volume_price_contribution()
     chart_segment_growth_rate()
-
-    # --- Charts: Production ---
     chart_inventory_position()
-    chart_units_sold_vs_produced()
     chart_production_heatmap()
-
-    # --- Charts: Production Cost ---
     chart_cost_breakdown_quarterly()
+    chart_contribution_margin()
     chart_cost_per_unit_trend()
+    chart_cost_per_unit_decomposed()
     chart_revenue_cost_ebit()
+    chart_net_cash_waterfall()
+    chart_collections_timing_gap()
+    chart_gross_profit_ebit_waterfall()
 
     # --- Excel Export ---
     export_sales_bdg_excel()
     export_production_bdg_excel()
     export_production_cost_bdg_excel()
+    export_cash_flow_bdg_excel()
+    export_income_bdg_excel()
 
 if __name__ == "__main__":
     main()

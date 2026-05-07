@@ -1,6 +1,0 @@
-policy_type,category,current_month_pct,following_month_pct,two_months_out_pct
-Collection,Human Expression,0.40,0.50,0.10
-Collection,Flame for Life,0.60,0.30,0.10
-Collection,Blade Excellence,0.50,0.40,0.10
-Payment,Direct Materials,0.70,0.30,0.00
-Payment,Labor & Overhead,1.00,0.00,0.00
